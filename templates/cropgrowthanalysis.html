@@ -1,0 +1,135 @@
+<!-- templates/cropgrowthanalysis.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Growth Analysis - SmartAgri</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='cropgrowthanalysis.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="neumorphic-header">
+        <a href="{{ url_for('index') }}" class="back-btn neumorphic neumorphic-button">← Back</a>
+        <h1>SmartAgri 🌾</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="chat-container">
+        <h2>🌱 Crop Growth Analysis</h2>
+        <p>Analyze the growth conditions for your crops.</p>
+
+        <!-- Crop Growth Form -->
+        <!-- Crop Growth Form -->
+<form id="cropGrowthForm" class="mb-4">
+    <div class="mb-3">
+        <label for="cropType" class="form-label">Crop Type:</label>
+        <input type="text" id="cropType" name="crop_type" class="form-control neumorphic" placeholder="e.g., Wheat" required>
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label">Location:</label>
+        <input type="text" id="location" name="location" class="form-control neumorphic" placeholder="e.g., Bangalore" required>
+    </div>
+    <div class="col-12">
+        <label for="plantingDate" class="form-label">Planting Date (optional):</label>
+        <input type="date" id="plantingDate" class="form-control neumorphic">
+    </div>
+    <div class="mb-3">
+        <label for="soilQuality" class="form-label">Soil Quality (optional):</label>
+        <input type="text" id="soilQuality" name="soil_quality" class="form-control neumorphic" placeholder="e.g., Loamy">
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn neumorphic-button w-100">Analyze</button>
+    </div>
+</form>
+
+        <!-- Analysis Result -->
+        <div id="analysisResult" class="mt-4" style="display: none;">
+            <h3>📊 Analysis Result</h3>
+            <p><strong>Crop Type:</strong> <span id="resultCropType"></span></p>
+            <p><strong>Location:</strong> <span id="resultLocation"></span></p>
+            <p><strong>Temperature:</strong> <span id="resultTemperature"></span></p>
+            <p><strong>Humidity:</strong> <span id="resultHumidity"></span></p>
+            <p><strong>Weather Conditions:</strong> <span id="resultWeather"></span></p>
+            <p><strong>Growth Status:</strong> <span id="resultGrowthStatus"></span></p>
+            <p><strong>Reason:</strong> <span id="resultReason"></span></p>
+            <p><strong>Best Planting Period:</strong> <span id="resultBestPeriod"></span></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="neumorphic-footer">
+        <p>© 2025 SmartAgri - Helping Farmers with AI</p>
+    </footer>
+
+    <!-- Butterfly Loader -->
+    <div class="loader" id="loader" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const cropGrowthForm = document.getElementById('cropGrowthForm');
+        const analysisResult = document.getElementById('analysisResult');
+        const loader = document.getElementById('loader');
+
+        cropGrowthForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(cropGrowthForm);
+            const data = Object.fromEntries(formData);
+
+            // Show loader
+            loader.style.display = 'flex';
+            analysisResult.style.display = 'none';
+
+            try {
+                const response = await fetch('/analyze_crop_growth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json();
+
+                // Hide loader
+                loader.style.display = 'none';
+
+                if (result.error) {
+                    alert(result.error);
+                    return;
+                }
+
+                // Display the result
+                document.getElementById('resultCropType').textContent = result.data.crop_type;
+                document.getElementById('resultLocation').textContent = result.data.location;
+                document.getElementById('resultTemperature').textContent = result.data.temperature + 'C';
+                document.getElementById('resultHumidity').textContent = result.data.humidity + '%';
+                document.getElementById('resultWeather').textContent = result.data.weather_conditions;
+                document.getElementById('resultGrowthStatus').textContent = result.data.growth_status;
+                document.getElementById('resultReason').textContent = result.data.growth_reason;
+                document.getElementById('resultBestPeriod').textContent = result.data.best_planting_period;
+
+                analysisResult.style.display = 'block';
+            } catch (error) {
+                // Hide loader
+                loader.style.display = 'none';
+                alert('Error analyzing crop growth: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

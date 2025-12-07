@@ -1,0 +1,245 @@
+/* static/css/disease_detection.css */
+
+/* Reset default styles and set the background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Set background image */
+    background: url('../static/images/disease.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #333;
+}
+
+/* Neumorphic header */
+.neumorphic-header {
+    background: rgba(224, 229, 236, 0.8); /* Semi-transparent background */
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 5px 5px 10px rgba(209, 217, 230, 0.5), -5px -5px 10px rgba(255, 255, 255, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Add blur effect for better readability */
+}
+
+.neumorphic-header h1 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Improve readability */
+}
+
+/* Back button (smaller) */
+.back-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 10px;
+    background: rgba(224, 229, 236, 0.8);
+    box-shadow: 5px 5px 10px rgba(209, 217, 230, 0.5), -5px -5px 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.back-btn:hover {
+    box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 80px auto 20px auto; /* Space for header and footer */
+    background: rgba(224, 229, 236, 0.5); /* Semi-transparent background */
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px rgba(209, 217, 230, 0.3), -10px -10px 20px rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    text-align: center;
+    backdrop-filter: blur(5px); /* Add blur effect for better readability */
+}
+
+/* Heading */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Improve readability */
+}
+
+/* Text muted */
+.text-muted {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Improve readability */
+}
+
+/* Form label */
+.form-label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Improve readability */
+}
+
+/* Neumorphic styling for form elements */
+.form-select,
+.form-control,
+textarea {
+    border: none;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly opaque white for form elements */
+    box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    color: #333;
+    outline: none;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: #999;
+}
+
+/* Neumorphic button */
+.neumorphic-button {
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background: rgba(224, 229, 236, 0.8);
+    box-shadow: 5px 5px 10px rgba(209, 217, 230, 0.5), -5px -5px 10px rgba(255, 255, 255, 0.5);
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.neumorphic-button:hover {
+    box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Video */
+#video {
+    width: 100%;
+    max-width: 500px;
+    display: none;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Canvas */
+#canvas {
+    display: none;
+}
+
+/* Camera controls container */
+.camera-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Switch camera button */
+#switchCameraBtn {
+    width: 100%;
+    max-width: 200px; /* Smaller width for the switch button */
+}
+
+/* Result box */
+.result-box {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly opaque white for readability */
+    border-radius: 15px;
+    box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.5);
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Neumorphic footer */
+.neumorphic-footer {
+    background: rgba(224, 229, 236, 0.3); /* More transparent background */
+    padding: 20px;
+    text-align: center;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.3), 5px 5px 10px rgba(209, 217, 230, 0.3);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(5px);
+}
+
+.neumorphic-footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Improve readability */
+}
+
+/* Hidden class */
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .text-muted {
+        font-size: 1rem;
+    }
+
+    .form-label {
+        font-size: 1rem;
+    }
+
+    .form-select,
+    .form-control,
+    textarea,
+    .neumorphic-button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .result-box {
+        font-size: 1rem;
+    }
+
+    #video {
+        max-width: 100%;
+    }
+
+    .back-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .camera-controls {
+        gap: 8px;
+    }
+
+    #switchCameraBtn {
+        max-width: 150px;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

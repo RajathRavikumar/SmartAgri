@@ -1,0 +1,143 @@
+/* static/css/nm.css */
+
+/* Reset default styles and set the background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #e0e5ec; /* Light gray background matching the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Neumorphic base class for shared styles */
+.neumorphic {
+    border-radius: 20px;
+    background: #e0e5ec;
+}
+
+/* Neumorphic card (container for the form) */
+.neumorphic-card {
+    width: 350px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff; /* Neumorphic shadow */
+}
+
+/* Heading style */
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Text muted style */
+.text-muted {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Input group for labels and inputs */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Neumorphic input fields */
+.neumorphic-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    box-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff; /* Inset shadow for input */
+    font-size: 16px;
+    color: #333;
+    border-radius: 15px; /* More rounded corners */
+}
+
+.neumorphic-input::placeholder {
+    color: #999;
+}
+
+/* Neumorphic button */
+.neumorphic-button {
+    width: 100%;
+    padding: 12px;
+    margin: 20px 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff; /* Neumorphic shadow for button */
+    font-size: 16px;
+    color: #333;
+    border-radius: 15px; /* More rounded corners */
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.neumorphic-button:hover {
+    box-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff; /* Inset shadow on hover */
+}
+
+/* Paragraph and link styles */
+p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Flash messages */
+.flash-success {
+    color: #28a745;
+    background: #d4edda;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.flash-error {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.flash-warning {
+    color: #ffc107;
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.flash-info {
+    color: #17a2b8;
+    background: #d1ecf1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

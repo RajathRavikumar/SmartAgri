@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='nm.css') }}">
+    <style>
+        /* Set the coffee plantation background on the body */
+        body {
+            background-image: url('{{ url_for("static", filename="image.jpg") }}');
+            background-size: cover; /* Scale image to cover the entire body */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent tiling */
+            background-attachment: fixed; /* Keep background fixed while scrolling */
+            position: relative; /* Ensure pseudo-element positioning works */
+        }
+        /* Add overlapping image with 50% opacity */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('{{ url_for("static", filename="over.jpg") }}');
+            background-size: cover; /* Scale overlay to cover the entire body */
+            background-position: center; /* Center the overlay */
+            background-repeat: no-repeat; /* Prevent tiling */
+            background-attachment: fixed; /* Keep overlay fixed while scrolling */
+            opacity: 0.4; /* 50% opacity */
+            z-index: -1; /* Below the login card */
+        }
+    </style>
+</head>
+<body>
+    <div class="neumorphic neumorphic-card">
+        <h1>Login</h1>
+        <p class="text-muted">Login to your account</p>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="neumorphic neumorphic-input" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="neumorphic neumorphic-input" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="neumorphic neumorphic-button">Sign In</button>
+        </form>
+
+        <p class="text-muted">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+    </div>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'925eeec76eb56f7a',t:'MTc0MjkxMTIwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

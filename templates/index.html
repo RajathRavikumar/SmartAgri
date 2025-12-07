@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartAgri - AI Agriculture Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        /* Background image for the body */
+        body {
+            background-image: url('{{ url_for("static", filename="index.png") }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        /* Container for falling leaves */
+        .leaf-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Above background, below content */
+            pointer-events: none; /* Prevent interaction with leaves */
+        }
+
+        /* Style for each falling leaf */
+        .leaf {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.7;
+            animation: fall linear 1;
+        }
+
+        /* Falling animation with slight horizontal drift using CSS variable */
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) translateX(0);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(100vh) translateX(var(--drift, 50px));
+                opacity: 0.3;
+            }
+        }
+
+        /* Make content sections transparent */
+        .hero-section, .description-section, .features-section, .feedback-section, .neumorphic-footer {
+            background: transparent;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2; /* Above leaves */
+        }
+
+        /* Ensure navbar is above everything */
+        .navbar {
+            z-index: 3; /* Above leaves and content */
+        }
+
+        /* Bold font for text elements (text-shadow removed) */
+        .hero-section h1, .hero-section p,
+        .description-section h2, .description-section p,
+        .features-section h2, .features-section a,
+        .feedback-section h2, .feedback-section h3, .feedback-section p,
+        .feedback-section textarea, .feedback-section button,
+        .neumorphic-footer p,
+        .navbar-brand, .nav-link {
+            font-weight: 700; /* Bold font */
+        }
+    </style>
+</head>
+<body>
+    <!-- Leaf container -->
+    <div class="leaf-container" id="leaf-container"></div>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">SmartAgri 🌾</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/disease_detection">Disease Detection</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/weather_forecast">Weather</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/agrichat">Assistant</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="description-section">
+        <div class="container">
+            <h1 class="text-bold" style="font-weight: 900;">🌿 Welcome to SmartAgri</h1>
+            <p class="lead" style="font-weight: 700;">Empowering Farmers with AI-Driven Solutions</p>
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    <section class="description-section">
+        <div class="container">
+            <h2>About SmartAgri</h2>
+            <p>
+                SmartAgri is a revolutionary AI-powered platform designed to transform the way farmers work, grow, and thrive. We understand the challenges faced by farmers—unpredictable weather, plant diseases, soil degradation, and the need for efficient resource management. That’s why we’ve harnessed the power of artificial intelligence to provide innovative tools and insights that make farming smarter, more sustainable, and more profitable.
+            </p>
+            <p>
+                Our mission is to empower farmers with cutting-edge technology, enabling them to make data-driven decisions and achieve higher yields with fewer resources. Whether you’re a small-scale farmer or managing a large agricultural operation, SmartAgri offers a suite of tools to help you succeed. From detecting plant diseases in real-time to providing weather forecasts, soil health analysis, and personalized farming advice through our AI chatbot, we’re here to support you every step of the way.
+            </p>
+            <p>
+                At SmartAgri, we believe in sustainable agriculture that benefits both the farmer and the planet. Our platform uses advanced machine learning models, satellite data, and real-time analytics to deliver actionable insights. Join thousands of farmers who are already using SmartAgri to optimize their farming practices, reduce costs, and increase productivity. Let’s grow together—smarter, greener, and better!
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2>Our Features</h2>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="/disease_detection" class="feature-btn neumorphic neumorphic-button">
+                        <i class="fas fa-seedling"></i> Plant Disease Detection
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="/weather_forecast" class="feature-btn neumorphic neumorphic-button">
+                        <i class="fas fa-cloud-sun"></i> Weather Forecast
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="/agrichat" class="feature-btn neumorphic neumorphic-button">
+                        <i class="fas fa-robot"></i> AI Chatbot for Farming Help
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="/cropgrowthanalysis" class="feature-btn neumorphic neumorphic-button">
+                        <i class="fas fa-chart-line"></i> Crop Growth Analysis
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="/irrigation_plan" class="feature-btn neumorphic neumorphic-button">
+                        <i class="fas fa-tint"></i> Smart Irrigation Planner
+                    </a>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <a href="#" class="feature-btn neumorphic neumorphic-button disabled">
+                        <i class="fas fa-prescription-bottle"></i> Fertilizer Recommendation System (Coming Soon)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section">
+        <div class="container">
+            <h2>💬 Share Your Feedback</h2>
+            <div class="row g-3">
+                <!-- Star Rating -->
+                <div class="col-12 col-md-6">
+                    <h3>Rate Our Website</h3>
+                    <div class="star-rating">
+                        <i class="fas fa-star star" data-value="1"></i>
+                        <i class="fas fa-star star" data-value="2"></i>
+                        <i class="fas fa-star star" data-value="3"></i>
+                        <i class="fas fa-star star" data-value="4"></i>
+                        <i class="fas fa-star star" data-value="5"></i>
+                    </div>
+                    <p id="rating-message" class="text-muted mt-2">Select a star to rate!</p>
+                </div>
+
+                <!-- Comment Box -->
+                <div class="col-12 col-md-6">
+                    <h3>Leave a Comment</h3>
+                    <form id="commentForm">
+                        <textarea id="commentInput" class="form-control neumorphic" rows="3" placeholder="Your feedback helps us improve!" required></textarea>
+                        <button type="submit" class="btn neumorphic-button w-100 mt-2">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Recent Feedback -->
+<div class="recent-feedback mt-5 text-center">
+    <h3>Recent Feedback</h3>
+    {% if feedback_list %}
+        {% for feedback in feedback_list %}
+            <div class="feedback-item neumorphic p-3 mb-3 mx-auto">
+                <div class="feedback-content text-center">
+                    <p class="mb-1"><strong>{{ feedback.email.split('@')[0] }}@...</strong></p>
+                    <p class="mb-1">{{ feedback.comment }}</p>
+                    {% if feedback.rating %}
+                        <div class="feedback-rating d-flex justify-content-center">
+                            {% for i in range(feedback.rating) %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% endfor %}
+                            {% for i in range(5 - feedback.rating) %}
+                                <i class="fas fa-star text-muted"></i>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted small mb-0">No rating provided</p>
+                    {% endif %}
+                </div>
+                <small class="text-muted d-block text-center mt-2">{{ feedback.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No feedback yet. Be the first to share your thoughts!</p>
+    {% endif %}
+</div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="neumorphic-footer">
+        <p>© 2025 SmartAgri. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for Star Rating, Comment Submission, and Falling Leaves -->
+    <script>
+        // Star Rating Functionality
+        const stars = document.querySelectorAll('.star');
+        const ratingMessage = document.getElementById('rating-message');
+        let selectedRating = 0;
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                stars.forEach(s => {
+                    const sValue = parseInt(s.getAttribute('data-value'));
+                    if (sValue <= value) {
+                        s.classList.add('hovered');
+                    } else {
+                        s.classList.remove('hovered');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', () => {
+                stars.forEach(s => {
+                    const sValue = parseInt(s.getAttribute('data-value'));
+                    if (selectedRating === 0 || sValue > selectedRating) {
+                        s.classList.remove('hovered');
+                    }
+                });
+            });
+
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.getAttribute('data-value'));
+                stars.forEach(s => {
+                    const sValue = parseInt(s.getAttribute('data-value'));
+                    if (sValue <= selectedRating) {
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.remove('selected');
+                    }
+                });
+
+                // Update rating message
+                ratingMessage.textContent = `You rated ${selectedRating} star${selectedRating !== 1 ? 's' : ''}!`;
+
+                // Send rating to server
+                fetch('/submit_rating', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rating: selectedRating })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        ratingMessage.textContent = 'Thank you for your rating!';
+                    } else {
+                        ratingMessage.textContent = 'Error submitting rating. Please try again.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    ratingMessage.textContent = 'Error submitting rating. Please try again.';
+                });
+            });
+        });
+
+        // Comment Form Submission
+        const commentForm = document.getElementById('commentForm');
+        const commentInput = document.getElementById('commentInput');
+
+        commentForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const comment = commentInput.value.trim();
+            if (!comment) {
+                alert('Please enter a comment before submitting.');
+                return;
+            }
+
+            fetch('/submit_comment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comment: comment })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your feedback!');
+                    commentInput.value = ''; // Clear the textarea
+                    // Optionally reload the page to show the new comment
+                    location.reload();
+                } else {
+                    alert('Error submitting comment. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting comment. Please try again.');
+            });
+        });
+
+        // Falling Leaves Animation - 10 leaves per minute
+        const leafContainer = document.getElementById('leaf-container');
+        const leafSize = 50;
+        const maxDuration = 10;
+        const leavesPerMinute = 100;
+        const spawnInterval = 20000 / leavesPerMinute;
+        let leafCount = 0;
+        const maxLeaves = 50;
+
+        function spawnLeaf() {
+            if (leafCount >= maxLeaves) {
+                clearInterval(spawnIntervalId);
+                return;
+            }
+
+            const leaf = document.createElement('img');
+            leaf.src = '{{ url_for("static", filename="leaf.png") }}';
+            leaf.className = 'leaf';
+            leaf.alt = 'Falling Leaf';
+
+            leaf.onerror = () => {
+                console.error(`Failed to load leaf image for leaf ${leafCount}`);
+                leaf.style.display = 'none';
+            };
+
+            const x = Math.random() * (window.innerWidth - leafSize);
+            leaf.style.left = `${x}px`;
+            leaf.style.top = `-100px`;
+
+            const duration = 5 + Math.random() * maxDuration;
+            leaf.style.animationDuration = `${duration}s`;
+
+            const drift = (Math.random() - 0.5) * 100;
+            leaf.style.setProperty('--drift', `${drift}px`);
+
+            leaf.addEventListener('animationend', () => {
+                leaf.remove();
+            });
+
+            leafContainer.appendChild(leaf);
+            leafCount++;
+        }
+
+        const spawnIntervalId = setInterval(spawnLeaf, spawnInterval);
+        spawnLeaf();
+
+        window.addEventListener('resize', () => {
+            const leaves = document.querySelectorAll('.leaf');
+            leaves.forEach(leaf => {
+                const x = Math.random() * (window.innerWidth - leafSize);
+                leaf.style.left = `${x}px`;
+            });
+        });
+    </script>
+</body>
+</html>
